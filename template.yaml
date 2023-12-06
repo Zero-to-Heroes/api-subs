@@ -1,0 +1,74 @@
+# https://github.com/awslabs/serverless-application-model/blob/develop/versions/2016-10-31.md
+# Indentation needs to be set with spaces, because YAML...
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+    UnsubscribeUserFromLegacyOwSub:
+        Type: AWS::Serverless::Function
+        Properties:
+            Handler: unsubscribe.default
+            Runtime: nodejs18.x
+            CodeUri: ./dist/unsubscribe
+            Timeout: 5
+            Policies:
+                - AWSLambdaVPCAccessExecutionRole
+                - SecretsManagerReadWrite
+                - AmazonSESFullAccess
+                # - arn:aws:iam::478062583808:policy/CloudWatchPolicyForLambda # See https://stackoverflow.com/questions/51166504/disable-cloudwatch-to-monitor-logs-for-lambda-function
+            Tags:
+                LambdaName: api-ow-legacy-unsub
+            AutoPublishAlias: live
+            FunctionUrlConfig:
+                AuthType: NONE
+    GetSubFromLegacyOwSub:
+        Type: AWS::Serverless::Function
+        Properties:
+            Handler: get-status.default
+            Runtime: nodejs18.x
+            CodeUri: ./dist/get-status
+            Timeout: 5
+            Policies:
+                - AWSLambdaVPCAccessExecutionRole
+                - SecretsManagerReadWrite
+                - AmazonSESFullAccess
+                # - arn:aws:iam::478062583808:policy/CloudWatchPolicyForLambda # See https://stackoverflow.com/questions/51166504/disable-cloudwatch-to-monitor-logs-for-lambda-function
+            Tags:
+                LambdaName: api-ow-legacy-get-status
+            AutoPublishAlias: live
+            FunctionUrlConfig:
+                AuthType: NONE
+    GetTebexSubDetails:
+        Type: AWS::Serverless::Function
+        Properties:
+            Handler: get-tebex-sub-details.default
+            Runtime: nodejs18.x
+            CodeUri: ./dist/get-tebex-sub-details
+            Timeout: 5
+            Policies:
+                - AWSLambdaVPCAccessExecutionRole
+                - SecretsManagerReadWrite
+                - AmazonSESFullAccess
+                # - arn:aws:iam::478062583808:policy/CloudWatchPolicyForLambda # See https://stackoverflow.com/questions/51166504/disable-cloudwatch-to-monitor-logs-for-lambda-function
+            Tags:
+                LambdaName: api-get-tebex-sub-details
+            AutoPublishAlias: live
+            FunctionUrlConfig:
+                AuthType: NONE
+    TebexHook:
+        Type: AWS::Serverless::Function
+        Properties:
+            Handler: tebex-hook.default
+            Runtime: nodejs18.x
+            CodeUri: ./dist/tebex-hook
+            Timeout: 5
+            Policies:
+                - AWSLambdaVPCAccessExecutionRole
+                - SecretsManagerReadWrite
+                - AmazonSESFullAccess
+                # - arn:aws:iam::478062583808:policy/CloudWatchPolicyForLambda # See https://stackoverflow.com/questions/51166504/disable-cloudwatch-to-monitor-logs-for-lambda-function
+            Tags:
+                LambdaName: api-tebex-hook
+            AutoPublishAlias: live
+            FunctionUrlConfig:
+                AuthType: NONE
