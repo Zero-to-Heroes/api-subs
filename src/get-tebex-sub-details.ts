@@ -70,7 +70,8 @@ const getTebexSubDetails = async (paymentId: string): Promise<any> => {
 };
 
 const getTebexSubsForToken = async (bearerToken: string): Promise<readonly TebexSub[]> => {
-	const url = 'https://subscriptions-api.overwolf.com/subscriptions/tgwf-5d18aa446fdc2d90ad150052b94881af883d826f';
+	const url =
+		'https://subscriptions-api.overwolf.com/subscriptions/tgwf-5d18aa446fdc2d90ad150052b94881af883d826f?extensionId=lnknbakkpommmjjdnelmfbjjdbocfpnpbkijjnob';
 	const headers = new Headers({
 		'Content-Type': 'application/json',
 		Authorization: `Bearer ${bearerToken}`,
