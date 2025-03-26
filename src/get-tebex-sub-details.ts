@@ -4,6 +4,8 @@
 import { GetSecretValueRequest } from 'aws-sdk/clients/secretsmanager';
 import { SecretInfo, getSecret } from './utils';
 
+const STORE_PUBLIC_TOKEN = 'xjh0-5ef1e6461f2aa381db4df635c3c0c5556aed5191';
+
 // [1]: https://aws.amazon.com/blogs/compute/node-js-8-10-runtime-now-available-in-aws-lambda/
 export default async (event, context, callback): Promise<any> => {
 	console.debug('handling event', event);
@@ -51,7 +53,6 @@ export default async (event, context, callback): Promise<any> => {
 
 const getTebexSubDetails = async (paymentId: string): Promise<any> => {
 	const url = `https://checkout.tebex.io/api/recurring-payments/${paymentId}`;
-	// TODO: extract this to secrets manager
 	const tebexCredentials = await getTebexCredentials();
 	const base64encoded = Buffer.from(tebexCredentials.publicKey + ':' + tebexCredentials.privateKey).toString(
 		'base64',
@@ -70,14 +71,13 @@ const getTebexSubDetails = async (paymentId: string): Promise<any> => {
 };
 
 const getTebexSubsForToken = async (bearerToken: string): Promise<readonly TebexSub[]> => {
-	const url =
-		'https://subscriptions-api.overwolf.com/subscriptions/tgwf-5d18aa446fdc2d90ad150052b94881af883d826f?extensionId=lnknbakkpommmjjdnelmfbjjdbocfpnpbkijjnob';
+	const url = `https://subscriptions-api.overwolf.com/subscriptions/${STORE_PUBLIC_TOKEN}?extensionId=lnknbakkpommmjjdnelmfbjjdbocfpnpbkijjnob`;
 	const headers = new Headers({
 		'Content-Type': 'application/json',
 		Authorization: `Bearer ${bearerToken}`,
 	});
 	const result = await fetch(url, { headers: headers });
-	console.debug('result', result);
+	// console.debug('result', result);
 	return await result.json();
 };
 

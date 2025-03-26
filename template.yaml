@@ -10,7 +10,7 @@ Resources:
             Handler: unsubscribe.default
             Runtime: nodejs18.x
             CodeUri: ./dist/unsubscribe
-            Timeout: 5
+            Timeout: 25
             # Layers:
             #     - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14"
             Policies:
@@ -30,7 +30,7 @@ Resources:
             Handler: get-status.default
             Runtime: nodejs18.x
             CodeUri: ./dist/get-status
-            Timeout: 5
+            Timeout: 25
             Layers:
                 - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14"
             Policies:
@@ -50,7 +50,7 @@ Resources:
             Handler: get-tebex-sub-details.default
             Runtime: nodejs18.x
             CodeUri: ./dist/get-tebex-sub-details
-            Timeout: 5
+            Timeout: 25
             Layers:
                 - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14"
             Policies:
@@ -70,7 +70,7 @@ Resources:
             Handler: tebex-hook.default
             Runtime: nodejs18.x
             CodeUri: ./dist/tebex-hook
-            Timeout: 5
+            Timeout: 25
             Layers:
                 - !Sub "arn:aws:lambda:${AWS::Region}:580247275435:layer:LambdaInsightsExtension:14"
             Policies:
